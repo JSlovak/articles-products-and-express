@@ -26,7 +26,6 @@ app.get(`*`, (req,res)=>{
   res.send('404');
 });
 
-
 //Creates server
 const server = app.listen(port, function () {
   const host = server.address().address;
