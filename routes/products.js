@@ -3,13 +3,16 @@
 const express = require('express');
 const router = express.Router();
 
-// Middleware
+// MIDDLEWARE
 router.use((req, res, next) => {
   console.log(req);
+//Payload Validation
 
   next();
 });
 
+
+// ROUTES
 // '/products' Route
 router.route('/')
   .get(function(req, res) {

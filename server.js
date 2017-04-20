@@ -15,6 +15,19 @@ app.use(express.static('public'));
 // Body-parse middleware
 app.use(bodyParser.urlencoded({extended: false}));
 
+// Middleware
+app.use((req, res, next) => {
+  console.log(req);
+  //Analytics Tracker
+    // log to a file all uri that are requested.
+      // ea. request on it's own line
+      // format: [method] [uri] [timestamp]
+  // file location: all logs should go into a directory called logs and end with the .log extension
+  // file name: the logs should be separated per day,
+      //create file name which displays date. e.g. 2016.01-17.13-45-06.log
+  next();
+});
+
 // Attach 'products' router to express
 app.use('/products', productsRoutes);
 
