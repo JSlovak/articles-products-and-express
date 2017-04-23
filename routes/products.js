@@ -54,9 +54,7 @@ router.route('/')
     res.render('products/index');
   })
   .post(function(req, res) {
-  postProduct();
-
-
+    postProduct(req, res);
     res.render('products/index');
   });
 
@@ -66,17 +64,19 @@ router.route('/')
     //responds with HTML generated from your template which displays the Products information for the product with the corresponding id.
     // file.name: index.hbs
 
-    res.render('index');
+    res.render('products/products/:id');
     res.send("Successfully hit the end of GET /products/:id route!");
   })
   .put(function(req, res) {
+    console.log(req.body);
+    console.log(res.body);
     //edits a product. Finds a product in a collection with the same id value and updates the information.
     //The incoming request will look like this: { id: Number, ... }
-//... represents a field to be edited for example: if the server was sent { id: 12, name: "Water Bed" } the server will find the product with an id of 12 and change the name property to be "Water Bed".
+    //... represents a field to be edited for example: if the server was sent { id: 12, name: "Water Bed" } the server will find the product with an id of 12 and change the name property to be "Water Bed".
 
-//If successful,redirect to /products/:id route, where :id is the product that was just edited
-
-//If not successful, then send the user back to the new article route, /products/:id/edit
+    //If successful,redirect to /products/:id route, where :id is the product that was just edited
+    res.render('products/products/:id');
+    //If not successful, then send the user back to the new article route, /products/:id/edit
     //communicate the error back to the user via templating.
     res.send("Successfully hit the end of POST /products/:id route!");
   })
