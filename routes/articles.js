@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
+
 // MIDDLEWARE
 router.use((req, res, next) => {
   console.log(req);
@@ -16,7 +17,6 @@ router.use((req, res, next) => {
 router.use((req, res, next) => {
   console.log(req);
 //Payload Validation
-
   next();
 });
 
@@ -27,6 +27,7 @@ router.route('/')
   .get(function(req, res) {
     // responds with HTML generated from your template which displays all Articles added thus far.
     // file name: index.hbs
+    res.render('index');
     res.send("Successfully hit the GET end of /articles route!");
   })
   .post(function(req, res) {

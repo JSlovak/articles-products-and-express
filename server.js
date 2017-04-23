@@ -1,21 +1,32 @@
 /*jshint esversion: 6 */
 
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const productsRoutes = require('./routes/products.js');
 const articlesRoutes = require('./routes/articles.js');
+const handlebars = require('express-handlebars');
 
 
 const app = express();
-const port = 3000;
 
-// Handles static requests
-app.use(express.static('public'));
 
-// Body-parse middleware
+// Rendering HANDLEBAR engine
+const hbs = handlebars.create({
+  extname: '.hbs',
+  defaultLayout: 'main'
+});
+
+// takes in a name and rendering engine
+app.engine('hbs', hbs.engine);
+// tells the server to 'view' the engine 'hbs'
+app.set('views', './views');
+app.set('view engine', 'hbs');
+
+
+// MIDDLEWARE
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Middleware
 app.use((req, res, next) => {
   console.log(req);
   //Analytics Tracker
@@ -39,10 +50,4 @@ app.get(`*`, (req,res)=>{
   res.send('404');
 });
 
-//Creates server
-const server = app.listen(port, function () {
-  const host = server.address().address;
-  const port = server.address().port;
-
-  console.log(`Server listening on ${port}`);
-});
+module.exports = app;

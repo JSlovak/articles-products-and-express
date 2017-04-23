@@ -3,6 +3,42 @@
 const express = require('express');
 const router = express.Router();
 
+allProducts = [];
+console.log(allProducts);
+
+// HElPER FUNCTIONS / DB FUNCTIONS
+
+function genID(){
+  return Math.floor((Math.random() * 1000) + 1);
+}
+
+const postProduct = (req, res) => {
+  newProduct = {
+    // id is a unique identifier for this item.
+    id: genID(),
+    name: req.body.name,
+    price: req.body.price,
+    inventory: req.body.inventory
+  };
+
+  allProducts.push(newProduct);
+  console.log(addProduct);
+
+    // if (Products.addProduct(req.body)) {
+    //   res.redirect('/products/index');
+    // } else {
+    //   res.redirect('/products/new');
+    // }
+};
+
+const putProduct = (req, res) => {
+
+};
+
+const deleteProduct = (req, res)=> {
+
+};
+
 // MIDDLEWARE
 router.use((req, res, next) => {
   console.log(req);
@@ -11,47 +47,44 @@ router.use((req, res, next) => {
   next();
 });
 
-
 // ROUTES
 // '/products' Route
 router.route('/')
   .get(function(req, res) {
-    //Responds with HTML generated from your template which displays all Products added thus far.
-    //file name: index.hbs
-    res.send("Successfully hit the end of GET /products route!");
+    res.render('products/index');
   })
   .post(function(req, res) {
-    // creates a new product
-    // The incoming request will look like this: { name: String, price: String, inventory: String }
-    // from this request you will save your data as { id: Number, name: String, price: Number, inventory: Number }
-    // id is a unique identifier for this item. You will generate this on the server side and it will be used to access specific products with it
-    // successful then redirect the user back to the /products route.
-    //not successful then send the user back to the new article route, /products/new and some way to communicate the error back to the user via templating.
+  postProduct();
 
-    res.send("Successfully hit the end of POST /products route!");
+
+    res.render('products/index');
   });
 
-// '/products/:id' Route
-router.route('/:id')
-  .get(function(req, res) {
+  // '/products/:id' Route
+  router.route('/:id')
+    .get(function(req, res) {
     //responds with HTML generated from your template which displays the Products information for the product with the corresponding id.
     // file.name: index.hbs
+
+    res.render('index');
     res.send("Successfully hit the end of GET /products/:id route!");
   })
   .put(function(req, res) {
     //edits a product. Finds a product in a collection with the same id value and updates the information.
     //The incoming request will look like this: { id: Number, ... }
 //... represents a field to be edited for example: if the server was sent { id: 12, name: "Water Bed" } the server will find the product with an id of 12 and change the name property to be "Water Bed".
+
 //If successful,redirect to /products/:id route, where :id is the product that was just edited
+
 //If not successful, then send the user back to the new article route, /products/:id/edit
     //communicate the error back to the user via templating.
-
     res.send("Successfully hit the end of POST /products/:id route!");
   })
   .delete(function(req, res) {
     //removes a product by it's id.
     // If successful:redirect back to the /products page
       //communicates 'successful'.
+
     // If not successful: then send the new article route, /products/:id, where :id is the product that was just edited
       // Message that this action was unsucessful.
 
@@ -64,7 +97,8 @@ router.route('/:id/edit')
    //Responds with HTML generated from your templates
    //The HTML should contain a form (with values already pre-filled?) so that a user can update the information for a product. This form points to your server's route for editing a product.
    //file name: edit.hbs
-   res.send("Successfully hit the end of GET /products/:id/edit route!");
+    res.render('edit');
+   //res.send("Successfully hit the end of GET /products/:id/edit route!");
  });
 
 // '/products/new' Route
@@ -73,9 +107,9 @@ router.route('/new')
     //Responds with HTML generated from your templates
     //Contains an empty form which a user will be able to create a new product. This form points to your server's route for creating a new product.
     //file name: new.hbs
-    res.send("Successfully hit the end of GET /products/new route!");
+    res.render('new');
+    //res.send("Successfully hit the end of GET /products/new route!");
   });
 
-
-
 module.exports = router;
+
